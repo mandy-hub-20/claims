@@ -1,0 +1,117 @@
+openapi: 3.0.1
+info:
+  title: Claim services
+  description: RESTful APIs for claim services
+  version: 1.0.0
+servers:
+- url: http://localhost/v1
+paths:
+  /claims:
+    get:
+      summary: Get all claims
+      operationId: getAllclaims
+      responses:
+        200:
+          description: All claims
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/claims'
+            application/json:
+              example: |-
+                {
+                  data: [
+                    {
+                      inventoryId: ,
+                      userId: 1,
+                      itemCode: "1",
+                      unitPrice: 1.0,
+                      quantity: 1,
+                      status: ""
+                    }
+                  ]
+                }
+    put:
+      summary: Add a new claim
+      operationId: addClaim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Claim'
+        required: true
+      responses:
+        200:
+          description: The claim added
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Claim'
+            application/json:
+              example: |-
+                {
+                  data: [
+                    {
+                      claimNumber: 1,
+                      applicationDate: 1,
+                      policyNumber: "1",
+                      amount: 1.0,
+                      status: "INITIAL"
+                    }
+                  ]
+                }
+      x-codegen-request-body-name: body
+  /claims/{claimNumber}:
+    get:
+      summary: Get a claim by claimNumber
+      operationId: getClaimByNumber
+      parameters:
+      - name: claimNumber
+        in: path
+        description: claim Number
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Get claim with the given Number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+              example: |-
+                {
+                      claimNumber: 1,
+                      applicationDate: 1,
+                      policyNumber: "1"
+                }
+components:
+  schemas:
+    Claim:
+      type: object
+      properties:
+        claimNumber:
+          type: string
+        applicationDate:
+          type: Date
+        policyNumber:
+          type: string
+        amount:          
+          type: integer
+        status:
+          type: string
+    claims:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Claim'
+  securitySchemes:
+    basic_auth:
+      type: http
+      scheme: basic
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

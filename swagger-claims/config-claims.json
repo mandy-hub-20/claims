@@ -1,0 +1,12 @@
+{
+"apiPackage": "com.exercise.claims.api",
+"groupId":"com.exercise.claims",
+"artifactId": "claim-services",
+"basePackage": "com.exercise.claims",
+"configPackage": "com.exercise.claims.config",
+"modelPackage": "com.exercise.claims.model",
+"language": "spring-boot",
+"useRxJava":"true",
+"delegatePattern": "true",
+"hideGenerationTimestamp": "true"
+}
